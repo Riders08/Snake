@@ -1,0 +1,116 @@
+:root{
+    --ecriture: hsla(0, 0%, 0%, 1);
+    --background: white;
+    --background-score : lightslategray;
+    --background-game : #222;
+} 
+
+body{
+    background-color: var(--background);
+    font-family: Arial, sans-serif;
+}
+
+.game-container{
+    text-align: center;
+}
+
+.configuration{
+    display: flex;
+    flex-direction: row;
+    margin: 1.5rem;
+}
+
+.Title{
+    position: absolute;
+    margin-top: 1.5rem;
+    left: 40%;
+    color: var(--ecriture);
+    font-style:inherit;
+}
+
+.score{
+    display: flex;
+    margin-top: 1rem;
+    padding: 10px 20px;
+    border-radius: 2rem;
+    background-color: var(--background-score);
+    margin-left: auto;
+}
+
+.actually_score{
+    color: var(--ecriture);
+    padding: 0rem 1rem 0rem 1rem;
+    font-size: 18px;
+}
+
+.best_score{
+    color: var(--ecriture);
+    padding: 0rem 1rem 0rem 1rem;
+    font-size: 18px;
+}
+
+.theme_switch{
+    position: relative;
+    display: inline-block;
+    display: center;
+    width: 80px;
+    height: 30px;
+    margin: 1.5rem 0rem;
+    font-size: 32px;
+}
+
+.switch_input{
+    opacity: 0;
+    height: 0;
+    width: 0;
+}
+
+.slider{
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background-color: lightslategray;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.slider:before{
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 4px;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.3s;
+    box-shadow: 0 0 6px #ffbb00aa;
+}
+input:checked + .slider {
+    background-color:lightslategray;
+}
+input:checked + .slider:before {
+  transform: translateX(45px);
+  background: black;
+  box-shadow: 0 0 6px #000000aa;
+}
+.slider:after {
+  content: '🌞';
+  position: absolute;
+  left: 6.5px;
+  top: 4px;
+  font-size: 14px;
+  transition: opacity 0.3s;
+}
+input:checked + .slider:after {
+  content: '🌜';
+  left: 50px;
+}
+
+.gameCanvas{
+    margin: 2rem;
+    border: 2px solid black;
+    background: var(--background-game);
+    height: 500px;
+    width: 1400px;
+}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="shortcut icon" href="Image/Icons/favicon.ico" type="image/x-icon">
+        <title>Snake Game 🎮</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    </head>
+    <body>
+        <div class="game-container">
+            <div class="configuration">
+                <label class="theme_switch">
+                    <input class="switch_input" type="checkbox" id="theme">
+                    <span class="slider"></span>
+                </label>
+                <h1 class="Title">🐍 Snake</h1>
+                <div class="score">
+                    <p class="actually_score">🎯 Score : <span id="score">0</span></p>
+                    <p class="best_score">🏆 Meilleur Score : <span id="best_score">0</span></p>
+                </div>
+            </div>
+            <canvas class="gameCanvas" id="gameCanvas"></canvas>
+        </div>
+        <script type="module" src="js/main.js"></script>
+    </body>
+</html>
