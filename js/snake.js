@@ -1,5 +1,6 @@
 import { GRID_SIZE } from "./data.js";
 import { getRandomInt } from "./data.js";
+import { increase, scoreElement } from "./point.js";
 
 let head = {
     x: getRandomInt(GRID_SIZE/4,(GRID_SIZE-5)-1), 
@@ -41,6 +42,9 @@ export function grow(){
         y: snake[0].y + direction.y
     }
     snake.unshift(newHead);
+    const longueur = snake.length;
+    const combo = longueur - 3;
+    increase(combo, scoreElement);
 }
 
 export function changeDirection(key){
@@ -73,4 +77,11 @@ export function changeDirection(key){
         default: 
             direction; 
     }
+}
+
+export function biteTail(){
+    head = snake[0];
+    return snake.slice(1).some(element =>
+        element.x == head.x && element.y == head.y
+    );
 }

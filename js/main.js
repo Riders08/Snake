@@ -1,6 +1,8 @@
-import { grow, changeDirection, move, snake } from "./snake.js";
+import { grow, changeDirection, move, snake, biteTail } from "./snake.js";
 import { apple, generateApple, isEaten } from "./food.js";
 import { GRID_SIZE, TILE_SIZE } from "./data.js";
+import { saveBestScore, scoreElement } from "./point.js";
+
 const canvas = document.getElementById("game-canvas");
 const ctx = canvas.getContext("2d");
 
@@ -8,7 +10,6 @@ canvas.height = GRID_SIZE * TILE_SIZE;
 canvas.width = GRID_SIZE * TILE_SIZE;
 
 document.addEventListener("keydown", (e) =>{
-    console.log(e.key);
     changeDirection(e.key);
 })
 
@@ -44,5 +45,9 @@ setInterval(() =>{
     if(isEaten()){
         grow();
         generateApple();
+    }
+    if(biteTail()){
+        console.log("YOU LOSE");
+        saveBestScore(scoreElement);
     }
 },50);

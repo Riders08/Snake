@@ -23,11 +23,11 @@ export function generateApple(){
             x: getRandomInt(0, GRID_SIZE-1),
             y: getRandomInt(0, GRID_SIZE-1)
         }
-        snake.forEach(element =>{
-            if(element.x == apple.x && element.y == apple.y){
-                return false;
-            }
-        });
-        return true;
+        const collision = snake.some(element => 
+            element.x == apple.x && element.y == apple.y
+        );
+        if(!collision){
+            ready = true;
+        }
     }
 }
