@@ -1,8 +1,9 @@
 import { GRID_SIZE } from "./data.js";
+import { getRandomInt } from "./data.js";
 
 let head = {
-    x: getRandomInt(GRID_SIZE/4,GRID_SIZE-5), 
-    y: getRandomInt(GRID_SIZE/4,GRID_SIZE-5)
+    x: getRandomInt(GRID_SIZE/4,(GRID_SIZE-5)-1), 
+    y: getRandomInt(GRID_SIZE/4,(GRID_SIZE-5)-1)
 }
 
 export const snake = [
@@ -40,10 +41,6 @@ export function grow(){
         y: snake[0].y + direction.y
     }
     snake.unshift(newHead);
-}
-
-function getRandomInt(min, max){
-    return Math.floor(Math.random() * ((max -min)+1))+ min;
 }
 
 export function changeDirection(key){
