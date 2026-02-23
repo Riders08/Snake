@@ -8,7 +8,10 @@ export function increase(combo){
     }else{
         scoreElement.innerHTML = combo + actual_score ;
     }
-    console.log(scoreElement.innerHTML);
+}
+
+export function restartScore(){
+    scoreElement.innerHTML = 0;
 }
 
 export function saveBestScore(score_game){
