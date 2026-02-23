@@ -1,6 +1,6 @@
 import { grow, changeDirection, move, snake, biteTail, restartSnake } from "./snake.js";
 import { apple, generateApple, isEaten } from "./food.js";
-import { GRID_SIZE, TILE_SIZE, restartSpeed, speed } from "./data.js";
+import { GRID_SIZE, TILE_SIZE, restartSpeed, speed, pause, setStatePause } from "./data.js";
 import { restartScore, saveBestScore, scoreElement } from "./point.js";
 
 const canvas = document.getElementById("game-canvas");
@@ -71,6 +71,23 @@ function gameOver(){
         
 } // Cas de défaite
 
+document.querySelector(".pause_game").addEventListener("click",(e) =>{
+    if(pause){
+        reloadGame();
+    }else{
+        stopGame();
+    }
+}); // Evenement qui gére la pause du jeu 
+
+function stopGame(){
+    setStatePause();
+    clearInterval(game_interval);
+}// Fonction qui met le jeu en pause
+
+function reloadGame(){
+    setStatePause();
+    setInterval(gameLoop,speed)
+}// Fonction qui relance le jeu qui était en pause
 
 function restartGame(){
     restartSnake();

@@ -14,7 +14,7 @@ snake.forEach(element =>{
 
 export function isEaten(){
     return snake[0].x == apple.x && snake[0].y == apple.y;
-}
+}// Fonction qui check si le serpent a mangé la pomme
 
 export function generateApple(){
     let ready = false;
@@ -30,4 +30,4 @@ export function generateApple(){
             ready = true;
         }
     }
-}
+} // Fonction qui genere une pomme

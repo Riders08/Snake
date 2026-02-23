@@ -27,7 +27,7 @@ export function restartSnake(){
         y: 0
     };
     snake = newSnake();
-}
+}// Réinitialise la taille du serpent + sa direction
 
 export function move(){
     const newHead ={
@@ -45,7 +45,7 @@ export function move(){
     }
     snake.unshift(newHead);
     snake.pop();
-}
+}// Déplacement du serpent
 
 export function grow(){
     const newHead ={
@@ -57,7 +57,7 @@ export function grow(){
     const combo = longueur - 3;
     increase(combo);
     speedBoost();
-}
+} // Fonction qui fait grandir le serpent + sa vitesse
 
 export function changeDirection(key){
     let actual_direction = direction;
@@ -89,11 +89,11 @@ export function changeDirection(key){
         default: 
             direction; 
     }
-}
+}// Fonction qui permet de changer la direction du serpent
 
 export function biteTail(){
     let head = snake[0];
     return snake.slice(1).some(element =>
         element.x == head.x && element.y == head.y
     );
-}
+}// Fonction qui verifie si le serpent s'est mordue la queue
