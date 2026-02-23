@@ -44,7 +44,7 @@ export function grow(){
     snake.unshift(newHead);
     const longueur = snake.length;
     const combo = longueur - 3;
-    increase(combo, scoreElement);
+    increase(combo);
 }
 
 export function changeDirection(key){

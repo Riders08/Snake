@@ -9,6 +9,11 @@ const ctx = canvas.getContext("2d");
 canvas.height = GRID_SIZE * TILE_SIZE;
 canvas.width = GRID_SIZE * TILE_SIZE;
 
+const img = new Image();
+img.src = "../Image/apple.png";
+
+const speed = 200;
+
 document.addEventListener("keydown", (e) =>{
     changeDirection(e.key);
 })
@@ -29,25 +34,27 @@ function drawSnake(){
 }
 
 function drawApple(){
-    const img = new Image();
-    img.src = "../Image/apple.png";
-
-    img.onload = function(){
-        const pattern = ctx.createPattern(img, "repeat");
-        ctx.fillStyle = pattern;
-        ctx.fillRect(apple.x * TILE_SIZE, apple.y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
-    };
+    ctx.drawImage(img, apple.x * TILE_SIZE, apple.y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
 }
 
-setInterval(() =>{
+let game_interval = setInterval(gameLoop,speed);
+
+function gameLoop(){
     move();
-    draw();
     if(isEaten()){
         grow();
         generateApple();
     }
     if(biteTail()){
-        console.log("YOU LOSE");
+        gameOver();
         saveBestScore(scoreElement);
+        return;
     }
-},50);
+    draw();
+}
+
+function gameOver(){
+    clearInterval(game_interval);
+    console.log("YOU LOSE!");
+}
+

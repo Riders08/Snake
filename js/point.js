@@ -1,11 +1,12 @@
 export let scoreElement = document.getElementById("score");
 export let bestScoreElement = document.getElementById("best_score");
 
-export function increase(combo, actual_score){
+export function increase(combo){
+    const actual_score = parseInt(scoreElement.innerHTML)
     if(scoreElement.innerHTML == 0){
         scoreElement.innerHTML = combo;
     }else{
-        scoreElement.innerHTML = combo + parseInt(actual_score.innerHTML);
+        scoreElement.innerHTML = combo + actual_score ;
     }
     console.log(scoreElement.innerHTML);
 }
