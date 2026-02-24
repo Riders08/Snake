@@ -1,3 +1,5 @@
+import { getPoints } from "./main.js";
+
 export let scoreElement = document.getElementById("score");
 
 let bestScoreElement = document.getElementById("best_score");
@@ -18,12 +20,12 @@ export function checkBestScore(){
     return max(save_best_score, parseInt(bestScoreElement.innerHTML));
 }
 
-export function increase(combo){
+export function increase(){
     const actual_score = parseInt(scoreElement.innerHTML)
     if(scoreElement.innerHTML == 0){
-        scoreElement.innerHTML = combo;
+        scoreElement.innerHTML = getPoints();
     }else{
-        scoreElement.innerHTML = combo + actual_score ;
+        scoreElement.innerHTML = getPoints() + actual_score ;
     }
 }//Fonction qui augmente le score
 

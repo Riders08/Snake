@@ -9,8 +9,17 @@ const ctx = canvas.getContext("2d");
 canvas.height = GRID_SIZE * TILE_SIZE;
 canvas.width = GRID_SIZE * TILE_SIZE;
 
-const img = new Image();
-img.src = "../Image/apple.png";
+const Images = {
+    "normal": new Image(),
+    "second": new Image(),
+    "quadruple": new Image(),
+    "gold": new Image(),
+}
+
+Images.normal.src = "../Image/apple.png";
+Images.second.src = "../Image/second_apple.png";
+Images.quadruple.src = "../Image/quadruple_apple.png";
+Images.gold.src = "../Image/golden_apple.png";
 
 // View
 function draw(){
@@ -29,9 +38,12 @@ function drawSnake(){
 } // Affichage du serpent
 
 function drawApple(){
-    ctx.drawImage(img, apple.x * TILE_SIZE, apple.y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
+    ctx.drawImage(Images[apple.src], apple.x * TILE_SIZE, apple.y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
 } // Affichage de la pomme
 
+export function getPoints(){
+    return apple.point;
+}
 
 // Controller
 
@@ -73,8 +85,6 @@ function gameOver(){
     document.getElementById("lose").classList.remove("game_over");
         
 } // Cas de défaite
-
-
 
 document.addEventListener("keydown",(e) =>{
     if(e.key == "p" && pause){

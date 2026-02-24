@@ -53,9 +53,7 @@ export function grow(){
         y: snake[0].y + direction.y
     }
     snake.unshift(newHead);
-    const longueur = snake.length;
-    const combo = longueur - 3;
-    increase(combo);
+    increase();
     speedBoost();
 } // Fonction qui fait grandir le serpent + sa vitesse
 
