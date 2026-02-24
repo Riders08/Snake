@@ -18,10 +18,10 @@ export function restartSpeed(){
     speed = 200;
 }// Fonction qui remet la vitesse par défaut
 
-export function setStatePause(){
-    if(pause){
-        pause = false;
-    }else{
-        pause = true;
-    }
-}
+export function stopGame(){
+    pause = true;
+}// Fonction qui met le jeu en pause
+
+export function reloadGame(){
+    pause = false;
+}// Fonction qui relance le jeu qui était en pause
