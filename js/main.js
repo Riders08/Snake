@@ -74,6 +74,15 @@ function gameOver(){
         
 } // Cas de défaite
 
+
+
+document.addEventListener("keydown",(e) =>{
+    if(e.key == "p" && pause){
+        reloadGame();
+    }else if(e.key == "p"){
+        stopGame();
+    }
+}); // Evenement qui gére la pause du jeu'(version clavier)
 document.querySelector(".pause_game").addEventListener("click",(e) =>{
     if(pause){
         reloadGame();
