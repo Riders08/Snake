@@ -11,12 +11,17 @@ const Images = [
 
 const defaultType = Images[0];
 
-export let apple = {
-    x: getRandomInt(0, GRID_SIZE-1),
-    y: getRandomInt(0, GRID_SIZE-1),
-    src: defaultType.src,
-    point: defaultType.point
-};
+export let apple = defaultApple();
+
+function defaultApple(){
+    return {
+        x: getRandomInt(0, GRID_SIZE-1),
+        y: getRandomInt(0, GRID_SIZE-1),
+        src: defaultType.src,
+        point: defaultType.point
+    };
+}
+
 
 snake.forEach(element =>{
     if(element.x == apple.x && element.y == apple.y){
@@ -69,3 +74,6 @@ export function generateApple(){
     }
 } // Fonction qui genere une pomme
 
+export function restartApple(){
+    apple = defaultApple();
+}// Réinitialise la pomme par défaut

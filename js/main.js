@@ -1,5 +1,5 @@
 import { grow, changeDirection, move, snake, biteTail, restartSnake } from "./snake.js";
-import { apple, generateApple, isEaten } from "./food.js";
+import { apple, generateApple, isEaten, restartApple } from "./food.js";
 import { GRID_SIZE, TILE_SIZE, restartSpeed, speed, pause, stopGame, reloadGame } from "./data.js";
 import { restartScore, saveBestScore, scoreElement } from "./point.js";
 
@@ -103,7 +103,7 @@ document.querySelector(".pause_game").addEventListener("click",(e) =>{
 
 function restartGame(){
     restartSnake();
-    generateApple();
+    restartApple();
     restartScore();
     restartSpeed();
     startGame();
