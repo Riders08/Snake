@@ -1,5 +1,5 @@
 import { grow, changeDirection, move, snake, biteTail, restartSnake } from "./snake.js";
-import { apple, generateApple, isEaten, restartApple } from "./food.js";
+import { apple, bonus_apple, dropAppleBonus, generateApple, deleteAppleBonus, isEaten, restartApple, isEatenBonus } from "./food.js";
 import { GRID_SIZE, TILE_SIZE, restartSpeed, speed, pause, stopGame, reloadGame } from "./data.js";
 import { restartScore, saveBestScore, scoreElement } from "./point.js";
 
@@ -26,24 +26,44 @@ function draw(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawSnake();
     drawApple();
+    if(bonus_apple.actual){
+        drawAppleBonus();
+    }
 } // Affichage du jeu
 
 function drawSnake(){
-    snake.forEach(element => {
+    snake.forEach((element, head) => {
+        const radius = TILE_SIZE / 2;
+
+        const centerX = element.x * TILE_SIZE + radius;
+        const centerY = element.y * TILE_SIZE + radius;
+
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+
+        if(head === 0){
+            ctx.fillStyle = "#6CFF6C"; // tête
+        } else {
+            ctx.fillStyle = "#2ECC40"; // corps
+        }
+
+        ctx.fill();
+    });
+    /*snake.forEach(element => {
         ctx.fillStyle = "green",
         ctx.fillRect(element.x * TILE_SIZE, element.y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
     });
     ctx.fillStyle = "lightgreen",
-    ctx.fillRect(snake[0].x * TILE_SIZE, snake[0].y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+    ctx.fillRect(snake[0].x * TILE_SIZE, snake[0].y * TILE_SIZE, TILE_SIZE, TILE_SIZE);*/
 } // Affichage du serpent
 
 function drawApple(){
     ctx.drawImage(Images[apple.src], apple.x * TILE_SIZE, apple.y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
 } // Affichage de la pomme
 
-export function getPoints(){
-    return apple.point;
-}
+function drawAppleBonus(){
+    ctx.drawImage(Images[bonus_apple.src], bonus_apple.x * TILE_SIZE, bonus_apple.y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
+} // Affichage de la pomme
 
 // Controller
 
@@ -68,14 +88,26 @@ function gameLoop(){
     }
     move();
     if(isEaten()){
-        grow();
+        grow(apple);
         generateApple();
+        dropAppleBonus();
+        updateSpeed();
+    }
+    if(isEatenBonus()){
+        grow(bonus_apple);
+        deleteAppleBonus();
         updateSpeed();
     }
     if(biteTail()){
         gameOver();
         saveBestScore(scoreElement);
         return;
+    }
+    if(bonus_apple.actual){
+        bonus_apple.timeLeft--;
+        if(bonus_apple.timeLeft <= 0){
+            deleteAppleBonus();
+        }
     }
     draw();
 } // Fonction qui sert la boucle du jeu (le main)

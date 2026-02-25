@@ -47,13 +47,13 @@ export function move(){
     snake.pop();
 }// Déplacement du serpent
 
-export function grow(){
+export function grow(apple){
     const newHead ={
         x: snake[0].x + direction.x,
         y: snake[0].y + direction.y
     }
     snake.unshift(newHead);
-    increase();
+    increase(apple.point);
     speedBoost();
 } // Fonction qui fait grandir le serpent + sa vitesse
 
