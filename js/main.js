@@ -32,29 +32,29 @@ function draw(){
 } // Affichage du jeu
 
 function drawSnake(){
+ctx.shadowBlur = 15;
+    ctx.shadowColor = "#00FF00";
+
     snake.forEach((element, head) => {
         const radius = TILE_SIZE / 2;
-
+        
         const centerX = element.x * TILE_SIZE + radius;
         const centerY = element.y * TILE_SIZE + radius;
-
+        
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
-
+        
+        const intensity = 255 - (10 * head);
+        const green = Math.max(0,intensity);
         if(head === 0){
-            ctx.fillStyle = "#6CFF6C"; // tête
+            ctx.fillStyle = "lightgreen"; // tête
         } else {
-            ctx.fillStyle = "#2ECC40"; // corps
+            ctx.fillStyle = `rgb(0,${green},0)`; // corps
         }
-
+        
         ctx.fill();
     });
-    /*snake.forEach(element => {
-        ctx.fillStyle = "green",
-        ctx.fillRect(element.x * TILE_SIZE, element.y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
-    });
-    ctx.fillStyle = "lightgreen",
-    ctx.fillRect(snake[0].x * TILE_SIZE, snake[0].y * TILE_SIZE, TILE_SIZE, TILE_SIZE);*/
+    ctx.shadowBlur = 0;
 } // Affichage du serpent
 
 function drawApple(){
