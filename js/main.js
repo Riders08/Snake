@@ -49,13 +49,22 @@ function drawSnake(){
         
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
-        
-        const intensity = 255 - (10 * head);
-        const green = Math.max(0,intensity);
-        if(head === 0){
-            ctx.fillStyle = "lightgreen"; // tête
-        } else {
-            ctx.fillStyle = `rgb(0,${green},0)`; // corps
+        if(!darkMode){
+            const intensity = 0 + (10 * head);
+            const green = Math.max(0,intensity);
+            if(head === 0){
+                ctx.fillStyle = "rgb(0, 139, 35)"; // tête
+            } else{
+                ctx.fillStyle = `rgb(0,${green},0)`; // corps
+            }
+        }else{
+            const intensity = 255 - (10 * head);
+            const green = Math.max(0,intensity);
+            if(head === 0){
+                ctx.fillStyle = "lightgreen"; // tête
+            } else {
+                ctx.fillStyle = `rgb(0,${green},0)`; // corps
+            }
         }
         
         ctx.fill();
@@ -179,13 +188,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 startGame(); // Lancement du jeu
 
-let darkMode = localStorage.getItem("darkmode") === false;
+let darkMode = localStorage.getItem("darkmode") === "false";
 let theme = document.querySelector(".switch_input");
 theme.checked = darkMode;
 applyTheme(darkMode);
 
 theme.addEventListener("change", (e)=>{
     const is_dark = theme.checked  ;
+    darkMode = is_dark;
     localStorage.setItem("darkmode",is_dark);
     applyTheme(is_dark);
 })
