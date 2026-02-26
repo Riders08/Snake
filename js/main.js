@@ -49,7 +49,7 @@ function drawSnake(){
         
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
-        if(!darkMode){
+        if(darkMode){
             const intensity = 0 + (10 * head);
             const green = Math.max(0,intensity);
             if(head === 0){
@@ -214,6 +214,7 @@ function applyTheme(isDark){
         document.documentElement.style.setProperty('--new_game','black');
         document.documentElement.style.setProperty('--background-pause','rgb(17,19,19)');
         document.documentElement.style.setProperty('--color-pause','white');
+        document.documentElement.style.setProperty('--theme-logo','-8px 8px 3px -1px rgb(5, 7, 116)');
     }else{
         document.documentElement.style.setProperty('--background','white');
         document.documentElement.style.setProperty('--ecriture','rgb(255, 255, 255)');
@@ -227,5 +228,6 @@ function applyTheme(isDark){
         document.documentElement.style.setProperty('--new_game','white');
         document.documentElement.style.setProperty('--background-pause','rgb(238,236,236)');
         document.documentElement.style.setProperty('--color-pause','black');
+        document.documentElement.style.setProperty('--theme-logo','8px 8px 3px -1px rgb(216, 147, 19)');
     }
 }
