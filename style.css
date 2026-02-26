@@ -8,6 +8,7 @@
 body{
     background-color: var(--background);
     font-family: Arial, sans-serif;
+    margin: 0px;
 }
 
 .game-container{
@@ -15,12 +16,22 @@ body{
 }
 
 .configuration{
+    background: linear-gradient(90deg,rgb(18, 119, 9),rgb(28, 250, 28));
+    background-size: 400% ;
     position: relative;
     justify-content: space-between;
     align-items: center;
     display: flex;
     flex-direction: row;
-    margin: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    animation: slider_background 3s infinite alternate-reverse;
+}
+
+@keyframes slider_background {
+    to{
+        background-position-x: 100%;
+    }
 }
 
 .Title{
@@ -39,19 +50,22 @@ body{
     border-radius: 2rem;
     background-color: var(--background-score);
     margin-left: auto;
+    font-weight: 500;
+    
+    background: white;
+    cursor: pointer;
+    border: none;
+    border-radius: 2rem;
+    box-shadow: inset 10px 10px 5px -1px  rgb(18, 199, 12,0.4),
+                inset -10px -10px 5px -1px rgb(18, 199, 12,0.4);
 }
 
-.actually_score{
+.score p{
     color: var(--ecriture);
     padding: 0rem 1rem 0rem 1rem;
     font-size: 18px;
 }
 
-.best_score{
-    color: var(--ecriture);
-    padding: 0rem 1rem 0rem 1rem;
-    font-size: 18px;
-}
 
 .theme_switch{
     position: relative;
@@ -110,6 +124,11 @@ input:checked + .slider:after {
   left: 50px;
 }
 
+.game {
+    display: flex;
+    flex-direction: row;
+}
+
 .gameCanvas{
     display: block;
     margin: 2rem auto;
@@ -148,7 +167,7 @@ input:checked + .slider:after {
 
 #lose{
     position: absolute;
-    top: 46%;
+    top: 52.2%;
     height: 47%;
     left: 50%;
     width: 22%;
@@ -200,17 +219,3 @@ input:checked + .slider:after {
                 -10px -10px 10px -1px rgb(0, 0, 0);
 }
 
-/*.not_accept_button{
-    font-size: 32px;
-    font-weight: 500;
-    margin: 10px;
-    padding: 20px;
-    width: 350px;
-    background: white;
-    cursor: pointer;
-    border: none;
-    border-radius: 2rem;
-    color: red;
-    box-shadow: inset 10px 10px 10px -1px rgba(0, 255, 0, 0.16),
-                inset -10px -10px 10px -1px rgba(0, 0, 255, 0.16);
-}*/
