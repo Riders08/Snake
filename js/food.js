@@ -37,6 +37,33 @@ export function isEatenBonus(){
     return snake[0].x == bonus_apple.x && snake[0].y == bonus_apple.y;
 }// Fonction qui check si le serpent a mangé la pomme bonus
 
+export let eatAnimation = {
+    active : false,
+    frame : 0,
+    maxFrame : 6,
+    x : null,
+    y : null
+}
+
+export function activeAnimationEat(apple_eat){
+    eatAnimation = {
+        active : true,
+        frame : 0,
+        maxFrame : 6,
+        x : apple_eat.x,
+        y : apple_eat.y
+    }
+}
+
+export function deleteAnimationEat(){
+    eatAnimation = {
+        active : false,
+        frame : 0,
+        maxFrame : 6,
+        x : null,
+        y : null
+    }
+}
 
 export function generateApple(){
     let ready = false;

@@ -1,5 +1,5 @@
 import { grow, changeDirection, move, snake, biteTail, restartSnake } from "./snake.js";
-import { apple, bonus_apple, dropAppleBonus, generateApple, deleteAppleBonus, isEaten, restartApple, isEatenBonus } from "./food.js";
+import { apple, bonus_apple, dropAppleBonus, generateApple, deleteAppleBonus, isEaten, restartApple, isEatenBonus, eatAnimation, deleteAnimationEat, activeAnimationEat } from "./food.js";
 import { GRID_SIZE, TILE_SIZE, restartSpeed, speed, pause, stopGame, reloadGame } from "./data.js";
 import { restartScore, saveBestScore, scoreElement } from "./point.js";
 
@@ -29,10 +29,13 @@ function draw(){
     if(bonus_apple.actual){
         drawAppleBonus();
     }
+    if(eatAnimation.active){
+        drawEatAnimation();
+    }
 } // Affichage du jeu
 
 function drawSnake(){
-ctx.shadowBlur = 15;
+    ctx.shadowBlur = 15;
     ctx.shadowColor = "#00FF00";
 
     snake.forEach((element, head) => {
@@ -65,6 +68,18 @@ function drawAppleBonus(){
     ctx.drawImage(Images[bonus_apple.src], bonus_apple.x * TILE_SIZE, bonus_apple.y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
 } // Affichage de la pomme
 
+function drawEatAnimation(){
+    let radius = TILE_SIZE/2 + eatAnimation.frame * 2;
+    let opacity = 1 - (eatAnimation.frame / eatAnimation.maxFrame);
+    const centerX = eatAnimation.x * TILE_SIZE + TILE_SIZE/2;
+    const centerY = eatAnimation.y * TILE_SIZE + TILE_SIZE/2;
+    
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(0,255,0,${opacity})`;
+    ctx.fill();
+}// Affichage de l'animation de la pomme mangé
+
 // Controller
 
 document.addEventListener("keydown", (e) =>{
@@ -89,14 +104,22 @@ function gameLoop(){
     move();
     if(isEaten()){
         grow(apple);
+        activeAnimationEat(apple);
         generateApple();
         dropAppleBonus();
         updateSpeed();
     }
     if(isEatenBonus()){
         grow(bonus_apple);
+        activeAnimationEat(bonus_apple);
         deleteAppleBonus();
         updateSpeed();
+    }
+    if(eatAnimation.active){
+        eatAnimation.frame++;
+        if(eatAnimation.frame > eatAnimation.maxFrame){
+            deleteAnimationEat();
+        }
     }
     if(biteTail()){
         gameOver();
