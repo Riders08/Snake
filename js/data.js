@@ -11,7 +11,7 @@ export function getRandomInt(min, max){
 
 export function speedBoost(){
     const actual_speed = speed;
-    speed = actual_speed - 5;
+    speed = actual_speed - 3;
 }// Fonction qui boost la vitesse
 
 export function restartSpeed(){

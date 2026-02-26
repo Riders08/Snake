@@ -158,6 +158,7 @@ function restartGame(){
     clearInterval(game_interval)
     restartSnake();
     restartApple();
+    deleteAppleBonus();
     restartScore();
     restartSpeed();
     reloadGame(affichage_pause);

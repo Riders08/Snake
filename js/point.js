@@ -3,7 +3,7 @@ export let scoreElement = document.getElementById("score");
 let bestScoreElement = document.getElementById("best_score");
 let save_best_score =  parseInt(localStorage.getItem("bestScore"));
 
-let comboElement = document.getElementById("combo");
+export let comboElement = document.getElementById("combo");
 bestScoreElement.innerHTML = checkBestScore();
 
 function max(a, b){

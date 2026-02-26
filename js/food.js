@@ -1,6 +1,6 @@
 import { getRandomInt, GRID_SIZE } from "./data.js";
 import { snake } from "./snake.js";
-import { scoreElement } from "./point.js";
+import { comboElement, scoreElement } from "./point.js";
 
 const Images = [
     {src:"normal",point: 1},
@@ -78,10 +78,10 @@ export function generateApple(){
         if(!collision){
             ready = true;
             let appleType;
-            let points = parseInt(scoreElement.innerHTML);
-            if(points < 10){
+            let combo = parseInt(comboElement.innerHTML);
+            if(combo < 5){
                 appleType = Images[0];
-            }else if(points <= 50){
+            }else if(combo <= 30){
                 appleType = Images[getRandomInt(0,(Images.length -2))];
             }else{
                 let random = Math.random();
@@ -166,7 +166,7 @@ function generateAppleBonus(){
                 src: appleBonusType.src,
                 point: appleBonusType.point,
                 actual: true,
-                timeLeft: 50,
+                timeLeft: 30,
             }
         }
     }

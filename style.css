@@ -242,6 +242,8 @@ input:checked + .slider:after {
     border-radius: 2rem;
     color: var(--color-pause);
     box-shadow: 10px 10px 10px -1px var(--color-pause),
-                -10px -10px 10px -1px var(--color-pause);
+                -10px -10px 10px -1px var(--color-pause),
+                -10px 10px 10px -1px var(--color-pause),
+                10px -10px 10px -1px var(--color-pause);
 }
 /*Fin du bouton pause*/
