@@ -141,6 +141,17 @@ function gameOver(){
         
 } // Cas de défaite
 
+
+function restartGame(){
+    clearInterval(game_interval)
+    restartSnake();
+    restartApple();
+    restartScore();
+    restartSpeed();
+    startGame();
+    document.getElementById("lose").classList.add("game_over");
+} // Fonction qui reset la partie  
+
 document.addEventListener("DOMContentLoaded", () => {
     let affichage_pause = document.getElementById("affichage");
     document.addEventListener("keydown",(e) =>{
@@ -157,17 +168,10 @@ document.addEventListener("DOMContentLoaded", () => {
             stopGame(affichage_pause);
         }
     }); // Evenement qui gére la pause du jeu 
-});
 
-function restartGame(){
-    restartSnake();
-    restartApple();
-    restartScore();
-    restartSpeed();
-    startGame();
-    document.getElementById("lose").classList.add("game_over");
-} // Fonction qui reset la partie  
-document.querySelector(".restart").addEventListener("click", restartGame);
-// Evenement du relancement d'une partie
+    document.querySelector(".restart").addEventListener("click", restartGame);
+    document.querySelector(".new_game").addEventListener("click", restartGame);
+    // Evenement du relancement d'une partie
+});
 
 startGame(); // Lancement du jeu
