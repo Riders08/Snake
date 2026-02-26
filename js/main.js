@@ -3,6 +3,9 @@ import { apple, bonus_apple, dropAppleBonus, generateApple, deleteAppleBonus, is
 import { GRID_SIZE, TILE_SIZE, restartSpeed, speed, pause, stopGame, reloadGame } from "./data.js";
 import { restartScore, saveBestScore, scoreElement } from "./point.js";
 
+export let affichage_pause = document.getElementById("affichage");
+
+
 const canvas = document.getElementById("game-canvas");
 const ctx = canvas.getContext("2d");
 
@@ -148,12 +151,12 @@ function restartGame(){
     restartApple();
     restartScore();
     restartSpeed();
+    reloadGame(affichage_pause);
     startGame();
     document.getElementById("lose").classList.add("game_over");
 } // Fonction qui reset la partie  
 
 document.addEventListener("DOMContentLoaded", () => {
-    let affichage_pause = document.getElementById("affichage");
     document.addEventListener("keydown",(e) =>{
         if(e.key == "p" && pause){
             reloadGame(affichage_pause);
@@ -175,3 +178,44 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 startGame(); // Lancement du jeu
+
+let darkMode = localStorage.getItem("darkmode") === false;
+let theme = document.querySelector(".switch_input");
+theme.checked = darkMode;
+applyTheme(darkMode);
+
+theme.addEventListener("change", (e)=>{
+    const is_dark = theme.checked  ;
+    localStorage.setItem("darkmode",is_dark);
+    applyTheme(is_dark);
+})
+
+function applyTheme(isDark){
+    if(isDark){
+        document.documentElement.style.setProperty('--background','black');
+        document.documentElement.style.setProperty('--ecriture','hsla(0, 0%, 0%, 1)');
+        document.documentElement.style.setProperty('--ecriture-score','white');
+        document.documentElement.style.setProperty('--background-score','black');
+        document.documentElement.style.setProperty('--game-contour','white');  
+        document.documentElement.style.setProperty('--game-shadow','white');
+        document.documentElement.style.setProperty('--background-game','#e6e3e3');
+        document.documentElement.style.setProperty('--background-header-primary','rgb(28, 250, 28)');
+        document.documentElement.style.setProperty('--background-header-second','rgb(18, 119, 9)');
+        document.documentElement.style.setProperty('--new_game','black');
+        document.documentElement.style.setProperty('--background-pause','rgb(17,19,19)');
+        document.documentElement.style.setProperty('--color-pause','white');
+    }else{
+        document.documentElement.style.setProperty('--background','white');
+        document.documentElement.style.setProperty('--ecriture','rgb(255, 255, 255)');
+        document.documentElement.style.setProperty('--ecriture-score','black');
+        document.documentElement.style.setProperty('--background-score','white');
+        document.documentElement.style.setProperty('--game-contour','black');
+        document.documentElement.style.setProperty('--game-shadow','black');
+        document.documentElement.style.setProperty('--background-game','#222');
+        document.documentElement.style.setProperty('--background-header-primary','rgb(18, 119, 9)');
+        document.documentElement.style.setProperty('--background-header-second','rgb(28, 250, 28)');
+        document.documentElement.style.setProperty('--new_game','white');
+        document.documentElement.style.setProperty('--background-pause','rgb(238,236,236)');
+        document.documentElement.style.setProperty('--color-pause','black');
+    }
+}
