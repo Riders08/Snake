@@ -18,10 +18,12 @@ export function restartSpeed(){
     speed = 200;
 }// Fonction qui remet la vitesse par défaut
 
-export function stopGame(){
+export function stopGame(affichage_pause){
+    affichage_pause.innerHTML = `<i class="fa-solid fa-play"></i>`;
     pause = true;
 }// Fonction qui met le jeu en pause
 
-export function reloadGame(){
+export function reloadGame(affichage_pause){
+    affichage_pause.innerHTML = `<i class="fa-solid fa-pause"></i>`;
     pause = false;
 }// Fonction qui relance le jeu qui était en pause

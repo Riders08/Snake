@@ -141,20 +141,23 @@ function gameOver(){
         
 } // Cas de défaite
 
-document.addEventListener("keydown",(e) =>{
-    if(e.key == "p" && pause){
-        reloadGame();
-    }else if(e.key == "p"){
-        stopGame();
-    }
-}); // Evenement qui gére la pause du jeu'(version clavier)
-document.querySelector(".pause_game").addEventListener("click",(e) =>{
-    if(pause){
-        reloadGame();
-    }else{
-        stopGame();
-    }
-}); // Evenement qui gére la pause du jeu 
+document.addEventListener("DOMContentLoaded", () => {
+    let affichage_pause = document.getElementById("affichage");
+    document.addEventListener("keydown",(e) =>{
+        if(e.key == "p" && pause){
+            reloadGame(affichage_pause);
+        }else if(e.key == "p"){
+            stopGame(affichage_pause);
+        }
+    }); // Evenement qui gére la pause du jeu'(version clavier)
+    document.querySelector(".pause_game").addEventListener("click",(e) =>{
+        if(pause){
+            reloadGame(affichage_pause);
+        }else{
+            stopGame(affichage_pause);
+        }
+    }); // Evenement qui gére la pause du jeu 
+});
 
 function restartGame(){
     restartSnake();

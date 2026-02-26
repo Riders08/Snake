@@ -184,7 +184,33 @@ input:checked + .slider:after {
             -8px -8px -15px #ffffff;
 }
 
-.pause_game:active{
-    box-shadow: inset 8px 8px 15px #bebebe
-           inset -8px -8px -15px #ffffff;
+
+.pause_game{
+    font-size: 32px;
+    font-weight: 500;
+    margin: 10px;
+    padding: 20px;
+    width: 200px;
+    background: rgb(238, 236, 236);
+    cursor: pointer;
+    border: none;
+    border-radius: 2rem;
+    color: rgb(0, 0, 0);
+    box-shadow: 10px 10px 10px -1px rgb(0, 0, 0),
+                -10px -10px 10px -1px rgb(0, 0, 0);
 }
+
+/*.not_accept_button{
+    font-size: 32px;
+    font-weight: 500;
+    margin: 10px;
+    padding: 20px;
+    width: 350px;
+    background: white;
+    cursor: pointer;
+    border: none;
+    border-radius: 2rem;
+    color: red;
+    box-shadow: inset 10px 10px 10px -1px rgba(0, 255, 0, 0.16),
+                inset -10px -10px 10px -1px rgba(0, 0, 255, 0.16);
+}*/
