@@ -1,10 +1,11 @@
-import { grow, changeDirection, move, snake, biteTail, restartSnake } from "./snake.js";
+import { grow, changeDirection, move, snake, biteTail, restartSnake, collision, restartCollision } from "./snake.js";
 import { apple, bonus_apple, dropAppleBonus, generateApple, deleteAppleBonus, isEaten, restartApple, isEatenBonus, eatAnimation, deleteAnimationEat, activeAnimationEat } from "./food.js";
 import { GRID_SIZE, TILE_SIZE, restartSpeed, speed, pause, stopGame, reloadGame } from "./data.js";
 import { restartScore, saveBestScore, scoreElement } from "./point.js";
 
 export let affichage_pause = document.getElementById("affichage");
-
+let mode_difficult = document.getElementById("mode");
+export let easyMode = false;
 
 const canvas = document.getElementById("game-canvas");
 const ctx = canvas.getContext("2d");
@@ -133,9 +134,11 @@ function gameLoop(){
             deleteAnimationEat();
         }
     }
-    if(biteTail()){
+    if(biteTail() || collision){
         gameOver();
-        saveBestScore(scoreElement);
+        if(!easyMode){
+            saveBestScore(scoreElement);
+        }
         return;
     }
     if(bonus_apple.actual){
@@ -147,15 +150,9 @@ function gameLoop(){
     draw();
 } // Fonction qui sert la boucle du jeu (le main)
 
-function gameOver(){
-    clearInterval(game_interval);
-    document.getElementById("lose").classList.remove("game_over");
-        
-} // Cas de défaite
-
-
 function restartGame(){
-    clearInterval(game_interval)
+    clearInterval(game_interval);
+    restartCollision();
     restartSnake();
     restartApple();
     deleteAppleBonus();
@@ -165,6 +162,12 @@ function restartGame(){
     startGame();
     document.getElementById("lose").classList.add("game_over");
 } // Fonction qui reset la partie  
+
+function gameOver(){
+    clearInterval(game_interval);
+    document.getElementById("lose").classList.remove("game_over"); 
+} // Cas de défaite
+
 
 document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("keydown",(e) =>{
@@ -184,6 +187,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.querySelector(".restart").addEventListener("click", restartGame);
     document.querySelector(".new_game").addEventListener("click", restartGame);
+    document.querySelector(".mode_difficult").addEventListener("click", (e) =>{
+        if(easyMode){
+            easyMode = false;
+            mode_difficult.innerHTML = `Mode Facile`;
+        }else{
+            easyMode = true;
+            mode_difficult.innerHTML = `Mode Normal`;
+        }
+        restartGame();
+    })
     // Evenement du relancement d'une partie
 });
 

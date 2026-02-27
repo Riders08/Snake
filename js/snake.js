@@ -1,5 +1,8 @@
 import { GRID_SIZE, getRandomInt, speedBoost } from "./data.js";
 import { increase } from "./point.js";
+import { easyMode } from "./main.js";
+
+export let collision = false;
 
 export let snake = newSnake();
 
@@ -34,14 +37,20 @@ export function move(){
         x: snake[0].x + direction.x,
         y: snake[0].y + direction.y
     }
-    if(newHead.x < 0){
-        newHead.x = GRID_SIZE-1;
-    }else if(newHead.x >= GRID_SIZE){
-        newHead.x = 0;
-    }else if(newHead.y < 0){
-        newHead.y = GRID_SIZE-1;
-    }else if(newHead.y >= GRID_SIZE){
-        newHead.y = 0;
+    if(easyMode){
+        if(newHead.x < 0){
+            newHead.x = GRID_SIZE-1;
+        }else if(newHead.x >= GRID_SIZE){
+            newHead.x = 0;
+        }else if(newHead.y < 0){
+            newHead.y = GRID_SIZE-1;
+        }else if(newHead.y >= GRID_SIZE){
+            newHead.y = 0;
+        }
+    }else {
+        if(newHead.x < 0 || newHead.x >= GRID_SIZE || newHead.y < 0 || newHead.y >= GRID_SIZE){
+            collision = true;
+        }
     }
     snake.unshift(newHead);
     snake.pop();
@@ -54,7 +63,9 @@ export function grow(apple){
     }
     snake.unshift(newHead);
     increase(apple.point);
-    speedBoost();
+    if(!easyMode){
+        speedBoost();
+    }
 } // Fonction qui fait grandir le serpent + sa vitesse
 
 export function changeDirection(key){
@@ -95,3 +106,7 @@ export function biteTail(){
         element.x == head.x && element.y == head.y
     );
 }// Fonction qui verifie si le serpent s'est mordue la queue
+
+export function restartCollision(){
+    collision = false;
+}

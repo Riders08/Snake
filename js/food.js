@@ -1,6 +1,7 @@
 import { getRandomInt, GRID_SIZE } from "./data.js";
 import { snake } from "./snake.js";
 import { comboElement, scoreElement } from "./point.js";
+import { easyMode } from "./main.js";
 
 const Images = [
     {src:"normal",point: 1},
@@ -160,13 +161,19 @@ function generateAppleBonus(){
                     appleBonusType = Images[getRandomInt(0,(Images.length -1))];
                 }
             }
+            let time = 0;
+            if(easyMode){
+                time = 80;
+            }else{
+                time = 30;
+            }
             bonus_apple = {
                 x: newAppleBonus.x,
                 y: newAppleBonus.y,
                 src: appleBonusType.src,
                 point: appleBonusType.point,
                 actual: true,
-                timeLeft: 30,
+                timeLeft: time,
             }
         }
     }
