@@ -1,6 +1,5 @@
 import { GRID_SIZE, getRandomInt, speedBoost } from "./data.js";
-import { increase } from "./point.js";
-import { easyMode } from "./main.js";
+import { increase, easyMode } from "./point.js";
 
 export let collision = false;
 

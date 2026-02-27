@@ -1,11 +1,10 @@
 import { grow, changeDirection, move, snake, biteTail, restartSnake, collision, restartCollision } from "./snake.js";
 import { apple, bonus_apple, dropAppleBonus, generateApple, deleteAppleBonus, isEaten, restartApple, isEatenBonus, eatAnimation, deleteAnimationEat, activeAnimationEat } from "./food.js";
 import { GRID_SIZE, TILE_SIZE, restartSpeed, speed, pause, stopGame, reloadGame } from "./data.js";
-import { restartScore, saveBestScore, scoreElement } from "./point.js";
+import { restartScore, saveBestScore, scoreElement, easyMode, setModeEasy, setModeNormal } from "./point.js";
 
 export let affichage_pause = document.getElementById("affichage");
 let mode_difficult = document.getElementById("mode");
-export let easyMode = false;
 
 const canvas = document.getElementById("game-canvas");
 const ctx = canvas.getContext("2d");
@@ -189,10 +188,10 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector(".new_game").addEventListener("click", restartGame);
     document.querySelector(".mode_difficult").addEventListener("click", (e) =>{
         if(easyMode){
-            easyMode = false;
+            setModeNormal();
             mode_difficult.innerHTML = `Mode Facile`;
         }else{
-            easyMode = true;
+            setModeEasy();
             mode_difficult.innerHTML = `Mode Normal`;
         }
         restartGame();

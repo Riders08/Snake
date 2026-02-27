@@ -1,7 +1,7 @@
 import { getRandomInt, GRID_SIZE } from "./data.js";
 import { snake } from "./snake.js";
-import { comboElement, scoreElement } from "./point.js";
-import { easyMode } from "./main.js";
+import { comboElement, scoreElement, easyMode } from "./point.js";
+
 
 const Images = [
     {src:"normal",point: 1},

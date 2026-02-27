@@ -6,6 +6,16 @@ let save_best_score =  parseInt(localStorage.getItem("bestScore"));
 export let comboElement = document.getElementById("combo");
 bestScoreElement.innerHTML = checkBestScore();
 
+export let easyMode = false;
+
+export function setModeEasy(){
+    easyMode = true;
+}
+
+export function setModeNormal(){
+    easyMode = false;
+}
+
 function max(a, b){
     if(a > b){
         return a;
@@ -20,12 +30,18 @@ export function checkBestScore(){
 }//Renvoi le max entre le score atteint par le joueur et le meilleur score enregistrer
 
 export function increase(point){
+    let total_point = 0;
+    if(easyMode){
+        total_point = 2*point;
+    }else{
+        total_point = point;
+    }
     const actual_score = parseInt(scoreElement.innerHTML)
     if(scoreElement.innerHTML == 0){
-        scoreElement.innerHTML = point;
+        scoreElement.innerHTML = total_point;
         comboElement.innerHTML++;
     }else{
-        scoreElement.innerHTML = point + actual_score ;
+        scoreElement.innerHTML = total_point + actual_score ;
         comboElement.innerHTML++;
     }
 }//Fonction qui augmente le score
