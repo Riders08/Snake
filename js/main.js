@@ -1,174 +1,45 @@
-import { grow, changeDirection, move, snake, biteTail, restartSnake, collision, restartCollision } from "./snake.js";
-import { apple, bonus_apple, dropAppleBonus, generateApple, deleteAppleBonus, isEaten, restartApple, isEatenBonus, eatAnimation, deleteAnimationEat, activeAnimationEat } from "./food.js";
-import { GRID_SIZE, TILE_SIZE, restartSpeed, speed, pause, stopGame, reloadGame } from "./data.js";
-import { restartScore, saveBestScore, scoreElement, easyMode, setModeEasy, setModeNormal } from "./point.js";
+import Game from "./Game.js";
+import { GRID_SIZE, TILE_SIZE } from "./tools.js";
 
-export let affichage_pause = document.getElementById("affichage");
+
 let mode_difficult = document.getElementById("mode");
+let affichage_pause = document.getElementById("affichage");
 
-const canvas = document.getElementById("game-canvas");
-const ctx = canvas.getContext("2d");
+export let scoreElement = document.getElementById("score");// Game
+export let bestScoreElement = document.getElementById("best_score");// Game
+export let comboElement = document.getElementById("combo");// Main
 
-canvas.height = GRID_SIZE * TILE_SIZE;
-canvas.width = GRID_SIZE * TILE_SIZE;
 
-const Images = {
-    "normal": new Image(),
-    "second": new Image(),
-    "quadruple": new Image(),
-    "gold": new Image(),
+let pause = false;
+function stopGame(affichage_pause){
+    affichage_pause.innerHTML = `<i class="fa-solid fa-play"></i>`;
+    pause = true;
+    game.pause = true;
 }
 
-Images.normal.src = "../Image/apple.png";
-Images.second.src = "../Image/second_apple.png";
-Images.quadruple.src = "../Image/quadruple_apple.png";
-Images.gold.src = "../Image/golden_apple.png";
+function reloadGame(affichage_pause){
+    affichage_pause.innerHTML = `<i class="fa-solid fa-pause"></i>`;
+    pause = false;
+    game.pause = false;
+}
 
-// View
-function draw(){
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawSnake();
-    drawApple();
-    if(bonus_apple.actual){
-        drawAppleBonus();
-    }
-    if(eatAnimation.active){
-        drawEatAnimation();
-    }
-} // Affichage du jeu
+let easyMode = false;
+function setModeEasy(){
+    mode_difficult.innerHTML = `Mode Normal`;
+    easyMode = true;
+    game.easyMode = true;
+}
 
-function drawSnake(){
-    ctx.shadowBlur = 15;
-    ctx.shadowColor = "#00FF00";
-
-    snake.forEach((element, head) => {
-        const radius = TILE_SIZE / 2;
-        
-        const centerX = element.x * TILE_SIZE + radius;
-        const centerY = element.y * TILE_SIZE + radius;
-        
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
-        if(darkMode){
-            const intensity = 0 + (10 * head);
-            const green = Math.max(0,intensity);
-            if(head === 0){
-                ctx.fillStyle = "rgb(0, 139, 35)"; // tête
-            } else{
-                ctx.fillStyle = `rgb(0,${green},0)`; // corps
-            }
-        }else{
-            const intensity = 255 - (10 * head);
-            const green = Math.max(0,intensity);
-            if(head === 0){
-                ctx.fillStyle = "lightgreen"; // tête
-            } else {
-                ctx.fillStyle = `rgb(0,${green},0)`; // corps
-            }
-        }
-        
-        ctx.fill();
-    });
-    ctx.shadowBlur = 0;
-} // Affichage du serpent
-
-function drawApple(){
-    ctx.drawImage(Images[apple.src], apple.x * TILE_SIZE, apple.y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
-} // Affichage de la pomme
-
-function drawAppleBonus(){
-    ctx.drawImage(Images[bonus_apple.src], bonus_apple.x * TILE_SIZE, bonus_apple.y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
-} // Affichage de la pomme
-
-function drawEatAnimation(){
-    let radius = TILE_SIZE/2 + eatAnimation.frame * 2;
-    let opacity = 1 - (eatAnimation.frame / eatAnimation.maxFrame);
-    const centerX = eatAnimation.x * TILE_SIZE + TILE_SIZE/2;
-    const centerY = eatAnimation.y * TILE_SIZE + TILE_SIZE/2;
-    
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(0,255,0,${opacity})`;
-    ctx.fill();
-}// Affichage de l'animation de la pomme mangé
-
-// Controller
-
-document.addEventListener("keydown", (e) =>{
-    changeDirection(e.key);
-}) // Commande de contrôle
-
-let game_interval; // Interval du jeu
-
-function startGame(){
-    game_interval = setInterval(gameLoop,speed);
-} // Création du jeu de base
-
-function updateSpeed(){
-    clearInterval(game_interval);
-    game_interval = setInterval(gameLoop, speed);
-} // Mise a jour de la vitesse
-
-function gameLoop(){
-    if(pause){
-        return;
-    }
-    move();
-    if(isEaten()){
-        grow(apple);
-        activeAnimationEat(apple);
-        generateApple();
-        dropAppleBonus();
-        updateSpeed();
-    }
-    if(isEatenBonus()){
-        grow(bonus_apple);
-        activeAnimationEat(bonus_apple);
-        deleteAppleBonus();
-        updateSpeed();
-    }
-    if(eatAnimation.active){
-        eatAnimation.frame++;
-        if(eatAnimation.frame > eatAnimation.maxFrame){
-            deleteAnimationEat();
-        }
-    }
-    if(biteTail() || collision){
-        gameOver();
-        if(!easyMode){
-            saveBestScore(scoreElement);
-        }
-        return;
-    }
-    if(bonus_apple.actual){
-        bonus_apple.timeLeft--;
-        if(bonus_apple.timeLeft <= 0){
-            deleteAppleBonus();
-        }
-    }
-    draw();
-} // Fonction qui sert la boucle du jeu (le main)
-
-function restartGame(){
-    clearInterval(game_interval);
-    restartCollision();
-    restartSnake();
-    restartApple();
-    deleteAppleBonus();
-    restartScore();
-    restartSpeed();
-    reloadGame(affichage_pause);
-    startGame();
-    document.getElementById("lose").classList.add("game_over");
-} // Fonction qui reset la partie  
-
-function gameOver(){
-    clearInterval(game_interval);
-    document.getElementById("lose").classList.remove("game_over"); 
-} // Cas de défaite
-
+function setModeNormal(){
+    mode_difficult.innerHTML = `Mode Facile`;
+    easyMode = false;
+    game.easyMode = false;
+}
 
 document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("keydown", (e) =>{
+        game.snake.changeDirection(e.key);
+    });
     document.addEventListener("keydown",(e) =>{
         if(e.key == "p" && pause){
             reloadGame(affichage_pause);
@@ -184,23 +55,33 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }); // Evenement qui gére la pause du jeu 
 
-    document.querySelector(".restart").addEventListener("click", restartGame);
-    document.querySelector(".new_game").addEventListener("click", restartGame);
+    document.querySelector(".restart").addEventListener("click", game.restartGame());
+    document.querySelector(".new_game").addEventListener("click", game.restartGame());
     document.querySelector(".mode_difficult").addEventListener("click", (e) =>{
         if(easyMode){
             setModeNormal();
-            mode_difficult.innerHTML = `Mode Facile`;
         }else{
             setModeEasy();
-            mode_difficult.innerHTML = `Mode Normal`;
         }
-        restartGame();
+        game.restartGame();
     })
-    // Evenement du relancement d'une partie
 });
 
-startGame(); // Lancement du jeu
+function updateSpeed(){
+    clearInterval(game);
+    game = setInterval(gameLoop, speed);
+}
 
+
+const canvas = document.getElementById("game-canvas");
+const ctx = canvas.getContext("2d");
+
+canvas.height = GRID_SIZE * TILE_SIZE;
+canvas.width = GRID_SIZE * TILE_SIZE;
+
+
+
+//Partie Theme Switch 
 let darkMode = localStorage.getItem("darkmode") === "false";
 let theme = document.querySelector(".switch_input");
 theme.checked = darkMode;
@@ -244,3 +125,25 @@ function applyTheme(isDark){
         document.documentElement.style.setProperty('--theme-logo','8px 8px 3px -1px rgb(216, 147, 19)');
     }
 }
+
+const game = new Game(canvas.width, canvas.height);
+
+game.easyMode = easyMode;
+game.darkMode = darkMode;
+game.pause = pause;
+
+function gameLoop(){
+    game.update();
+    if(game.isEaten() || (game.appleBonus != null && game.isEatenBonus())){
+        updateSpeed();
+    }
+    if(game.lose){
+        reloadGame(affichage_pause);
+        document.getElementById("lose").classList.remove("game_over");
+        clearInterval(gameLoop);
+    }
+    document.getElementById("lose").classList.add("game_over"); 
+    game.draw(ctx);
+}
+
+setInterval(gameLoop, game.speed.speed);
