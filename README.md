@@ -13,7 +13,7 @@ git clone https://github.com/Riders08/Snake.git
 Une fois cela fait normalement un dossier nommé "Snake" sera apparu à la racine de votre chemin actuel.
 Pour le vérifier il suffit de taper la commande :
 ```bash
-ls #Pour visualiser votre racine
+ls # Pour afficher le contenu du dossier courant
 cd Snake #Pour vous rendre dans le dossier 
 ```
 ## Comment lancer le jeu ?
@@ -31,8 +31,10 @@ npx http-server .
 Une fois que vous aurez tapé cette commande, vous aurez très probablement une ou plusieurs adresses, il ne vous restera plus qu'à la copier-coller l'une d'entre elles dans n'importe quel navigateur web:
 
 ```bash
-http://127.0.0.1:8080 # Exemple de adresse possible
+http://127.0.0.1:8080 # Exemple d'adresse possible
 ```
+
+Alternative possible : Si vous avez un environnement de travail tel que Visual Studio Code, vous pouvez également utiliser des outils comme Live Server pour lancer ce projet
 
 #### Note Importante
 
@@ -41,7 +43,8 @@ Attention pour faire cela il faut au préalable avoir Node.js que vous pouvez re
 https://nodejs.org
 ```
 
-Attention, si vous êtes sous Windows veuillez à avoir les droits.
+Si vous êtes sous Windows et que la commande `npx` ne fonctionne pas,
+ouvrez PowerShell en mode administrateur.
 
 ### Vous souhaitez lancer le jeu le plus facilement possible
 
@@ -53,4 +56,29 @@ https://riders08.github.io/Snake/
 
 ### Note Importante
 
-Ce projet n'a pas pu être testé sous MacOS, donc rien n'assure que cela marche sous cet environnement
+Le projet n’a pas été testé sur macOS mais devrait fonctionner
+sur tout navigateur moderne compatible ES6.<br>
+De plus, ce projet a été testé sur les navigateurs web suivants :
+- Microsoft Edge
+- Firefox 
+- Chrome
+- Opera GX
+
+## Fonctionnalités
+
+Vous retrouverez donc dans ce jeu :
+
+- 1 Mode Normal
+- 1 Mode Facile
+- Système de combo et de score
+- Pommes bonus
+- Augmentation progressive de la vitesse (Mode Normal uniquement)
+- Thème clair / sombre
+- Sauvegarde du meilleur score (localStorage)
+
+
+## Aperçu
+
+![Snake Screenshot](screenshot.png)
+
+![Snake Screenshot2](screenshot2.png)
