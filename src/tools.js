@@ -15,10 +15,10 @@ export const IMAGES = {
     "gold": new Image(),
 }
 
-IMAGES.normal.src = "./Image/apple.png";
-IMAGES.second.src = "./Image/second_apple.png";
-IMAGES.quadruple.src = "./Image/quadruple_apple.png";
-IMAGES.gold.src = "./Image/golden_apple.png";
+IMAGES.normal.src = "src/Image/apple.png";
+IMAGES.second.src = "src/Image/second_apple.png";
+IMAGES.quadruple.src = "src/Image/quadruple_apple.png";
+IMAGES.gold.src = "src/Image/golden_apple.png";
 
 
 export function getRandomInt(min, max){
