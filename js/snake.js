@@ -31,22 +31,27 @@ export class Snake{
             y: this.body[0].y + this.direction.y
         }
         if(mode){
-            if(this.body[0].x < 0){
-                this.body[0].x = GRID_SIZE-1;
-            }else if(this.snake.body[0].x >= GRID_SIZE){
-                this.body[0].x = 0;
-            }else if(this.snake.body[0].y < 0){
-                this.body[0].y = GRID_SIZE-1;
-            }else if(this.snake.body[0].y >= GRID_SIZE){
-                this.body[0].y = 0;
+            if(newHead.x < 0){
+                newHead.x = GRID_SIZE-1;
+            }else if(newHead.x >= GRID_SIZE){
+                newHead.x = 0;
+            }else if(newHead.y < 0){
+                newHead.y = GRID_SIZE-1;
+            }else if(newHead.y >= GRID_SIZE){
+                newHead.y = 0;
             }
+            collision = false;
         }else {
-            if(this.body[0].x < 0 || this.body[0].x >= GRID_SIZE || this.body[0].y < 0 || this.body[0].y >= GRID_SIZE){
+            if(newHead.x < 0 || newHead.x >= GRID_SIZE || newHead.y < 0 || newHead.y >= GRID_SIZE){
                 collision = true;
+                return collision;
+            }else{
+                collision = false;
             }
         }
-        this.body.unshift(newHead);
         this.body.pop();
+        this.body.unshift(newHead);
+        return collision;
     }
 
     grow(){

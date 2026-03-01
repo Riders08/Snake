@@ -55,21 +55,29 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }); // Evenement qui gére la pause du jeu 
 
-    document.querySelector(".restart").addEventListener("click", game.restartGame());
-    document.querySelector(".new_game").addEventListener("click", game.restartGame());
+    document.querySelector(".restart").addEventListener("click", restart);
+    document.querySelector(".new_game").addEventListener("click", restart);
     document.querySelector(".mode_difficult").addEventListener("click", (e) =>{
         if(easyMode){
             setModeNormal();
         }else{
             setModeEasy();
         }
-        game.restartGame();
+        restart();
     })
 });
 
+function restart(){
+    clearInterval(game_interval);
+    game.restartGame();
+    reloadGame(affichage_pause);
+    document.getElementById("lose").classList.add("game_over");
+    game_interval = setInterval(gameLoop, game.speed.defaultSpeed);
+}
+
 function updateSpeed(){
-    clearInterval(game);
-    game = setInterval(gameLoop, speed);
+    clearInterval(game_interval);
+    game_interval = setInterval(gameLoop, game.speed.speed);
 }
 
 
@@ -90,6 +98,7 @@ applyTheme(darkMode);
 theme.addEventListener("change", (e)=>{
     const is_dark = theme.checked  ;
     darkMode = is_dark;
+    game.darkMode = is_dark;
     localStorage.setItem("darkmode",is_dark);
     applyTheme(is_dark);
 })
@@ -132,18 +141,19 @@ game.easyMode = easyMode;
 game.darkMode = darkMode;
 game.pause = pause;
 
+let actual_speed = game.speed.speed
+
 function gameLoop(){
     game.update();
-    if(game.isEaten() || (game.appleBonus != null && game.isEatenBonus())){
+    if(actual_speed != game.speed.speed){
         updateSpeed();
     }
     if(game.lose){
+        clearInterval(game_interval);
         reloadGame(affichage_pause);
         document.getElementById("lose").classList.remove("game_over");
-        clearInterval(gameLoop);
     }
-    document.getElementById("lose").classList.add("game_over"); 
     game.draw(ctx);
 }
 
-setInterval(gameLoop, game.speed.speed);
+let game_interval = setInterval(gameLoop, game.speed.speed);

@@ -1,9 +1,9 @@
 export class EatAnimation{
-    constructor(x, y, frame, maxFrame){
+    constructor(x, y){
         this.x = x;
         this.y = y;
-        this.frame = frame;
-        this.maxFrame = maxFrame; 
+        this.frame = 0;
+        this.maxFrame = 6; 
     }
 
     update(){

@@ -4,6 +4,7 @@ import { AppleBonus } from "./appleBonus.js";
 import { Score } from "./score.js";
 import { Speed } from "./speed.js";
 import { GRID_SIZE, TILE_SIZE, getRandomInt, Images, IMAGES } from "./tools.js";
+import { EatAnimation } from "./eatAnimation.js";
 
 export default class Game{
     constructor(width, height){
@@ -12,12 +13,13 @@ export default class Game{
         this.snake = new Snake();
         this.apple = new Apple();
         this.appleBonus = null;
+        this.eatAnimation = null;
         this.score = new Score(0,0);
         this.speed = new Speed(200);
         this.collision = false;
         this.pause = false;
         this.easyMode = false;
-        this.darkMode = "false";
+        this.darkMode = false;
         this.lose = false;
     }
 
@@ -116,6 +118,7 @@ export default class Game{
     }
 
     restartGame(){
+        this.lose = false;
         this.restartCollision();
         this.snake.restartSnake();
         this.apple.restartApple();
@@ -128,9 +131,10 @@ export default class Game{
         if(this.pause){
             return;
         }
-        this.snake.move(this.easyMode, this.collision);
+        this.collision = this.snake.move(this.easyMode, this.collision);
         if(this.isEaten()){
             this.snake.grow();
+            this.eatAnimation = new EatAnimation(this.apple.x,  this.apple.y);
             this.score.increase(this.easyMode, this.apple.point);
             this.score.update();
             if(!this.easyMode){
@@ -142,6 +146,7 @@ export default class Game{
         if(this.appleBonus != null){
             if(this.isEatenBonus()){
                 this.snake.grow();
+                this.eatAnimation = new EatAnimation(this.apple.x,  this.apple.y);
                 this.score.increase(this.easyMode, this.appleBonus.point);
                 if(!this.easyMode){
                     this.speed.speedBoost();
@@ -149,7 +154,14 @@ export default class Game{
                 this.appleBonus = null;
             }
         }
+        if(this.eatAnimation != null){
+            this.eatAnimation.update();
+            if(this.eatAnimation.isTime()){
+                this.eatAnimation == null;
+            }
+        }
         if(this.snake.biteTail() || this.collision){
+            console.log(this.collision);            
             if(!this.easyMode){
                 this.score.saveBestScore();
             }
@@ -171,9 +183,9 @@ export default class Game{
         if(this.appleBonus!=null){
             this.drawAppleBonus(ctx);
         }
-        /*if(eatAnimation.active){
-            drawEatAnimation(ctx);
-        }*/
+        if(this.eatAnimation != null){
+            this.drawEatAnimation(ctx);
+        }
     } // Affichage du jeu
     
     drawSnake(ctx){
@@ -220,15 +232,15 @@ export default class Game{
     } // Affichage de la pomme
     
     
-    /*drawEatAnimation(ctx){
-        let radius = TILE_SIZE/2 + eatAnimation.frame * 2;
-        let opacity = 1 - (eatAnimation.frame / eatAnimation.maxFrame);
-        const centerX = eatAnimation.x * TILE_SIZE + TILE_SIZE/2;
-        const centerY = eatAnimation.y * TILE_SIZE + TILE_SIZE/2;
+    drawEatAnimation(ctx){
+        let radius = TILE_SIZE/2 + this.eatAnimation.frame * 2;
+        let opacity = 1 - (this.eatAnimation.frame / this.eatAnimation.maxFrame);
+        const centerX = this.eatAnimation.x * TILE_SIZE + TILE_SIZE/2;
+        const centerY = this.eatAnimation.y * TILE_SIZE + TILE_SIZE/2;
         
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(0,255,0,${opacity})`;
         ctx.fill();
-    }*/
+    }//Animation de la pomme mangée
 }
