@@ -22,8 +22,6 @@ Pour lancer le jeu, deux choix s'offrent à vous.
 
 ### Vous souhaitez lancer le jeu via le projet que vous venez de récupérer
 
-### Sous Linux
-
 Dans cette situation, il suffit de taper les commandes suivantes:
 
 ```bash
@@ -35,6 +33,15 @@ Une fois que vous aurez tapé cette commande, vous aurez très probablement une 
 ```bash
 http://127.0.0.1:8080 # Exemple de adresse possible
 ```
+
+#### Note Importante
+
+Attention pour faire cela il faut au préalable avoir Node.js que vous pouvez retrouver ici: 
+```bash
+https://nodejs.org
+```
+
+Attention, si vous êtes sous Windows veuillez à avoir les droits.
 
 ### Vous souhaitez lancer le jeu le plus facilement possible
 

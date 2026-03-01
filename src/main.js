@@ -1,4 +1,4 @@
-import Game from "./Game.js";
+import Game from "./game.js";
 import { GRID_SIZE, TILE_SIZE } from "./tools.js";
 
 
