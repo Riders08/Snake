@@ -58,11 +58,11 @@ export default class Game{
                     appleType = Images[getRandomInt(0,(Images.length -2))];
                 }else{
                     let random = Math.random();
-                    if(random < 0.40){
+                    if(random < 0.50){
                         appleType = Images[0];
-                    }else if(random < 0.90){
+                    }else if(random < 0.75){
                         appleType = Images[getRandomInt(0,(Images.length -2))];
-                    }else if(random < 0.95){
+                    }else if(random < 0.90){
                         appleType = Images[3];
                     }else{
                         appleType = Images[getRandomInt(0,(Images.length -1))];
@@ -97,11 +97,11 @@ export default class Game{
                     appleType = Images[getRandomInt(0,(Images.length -2))];
                 }else{
                     let random = Math.random();
-                    if(random < 0.40){
+                    if(random < 0.60){
                         appleType = Images[0];
-                    }else if(random < 0.90){
+                    }else if(random < 0.85){
                         appleType = Images[getRandomInt(0,(Images.length -2))];
-                    }else if(random < 0.95){
+                    }else if(random < 0.99){
                         appleType = Images[3];
                     }else{
                         appleType = Images[getRandomInt(0,(Images.length -1))];
@@ -136,8 +136,8 @@ export default class Game{
             this.snake.grow();
             this.eatAnimation = new EatAnimation(this.apple.x,  this.apple.y);
             this.score.increase(this.easyMode, this.apple.point);
-            this.score.update();
             if(!this.easyMode){
+                this.score.update();
                 this.speed.speedBoost();
             }
             this.generateApple();
@@ -146,9 +146,10 @@ export default class Game{
         if(this.appleBonus != null){
             if(this.isEatenBonus()){
                 this.snake.grow();
-                this.eatAnimation = new EatAnimation(this.apple.x,  this.apple.y);
-                this.score.increase(this.easyMode, this.appleBonus.point);
+                this.eatAnimation = new EatAnimation(this.appleBonus.apple.x,  this.appleBonus.apple.y);
+                this.score.increase(this.easyMode, this.appleBonus.apple.point);
                 if(!this.easyMode){
+                    this.score.update();
                     this.speed.speedBoost();
                 }
                 this.appleBonus = null;
@@ -161,7 +162,6 @@ export default class Game{
             }
         }
         if(this.snake.biteTail() || this.collision){
-            console.log(this.collision);            
             if(!this.easyMode){
                 this.score.saveBestScore();
             }

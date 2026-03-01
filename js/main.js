@@ -145,6 +145,9 @@ let actual_speed = game.speed.speed
 
 function gameLoop(){
     game.update();
+    scoreElement.innerHTML = game.score.actual_score;
+    bestScoreElement.innerHTML = game.score.best_score;
+    comboElement.innerHTML = game.score.combo;
     if(actual_speed != game.speed.speed){
         updateSpeed();
     }
